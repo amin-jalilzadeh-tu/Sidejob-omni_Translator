@@ -1,0 +1,212 @@
+
+    \documentclass{article}
+    \usepackage{geometry}
+    \usepackage{array}
+    \usepackage{graphicx}
+    \usepackage{color}
+
+    \begin{document}
+    % Page 1 Content START
+\section*{Figure 1 SBI Classification and Relation to Energy Sectors}
+
+\begin{description}
+    \item[301B Figure 1:] Placeholder for Image.
+\end{description}
+
+\section*{497B SQL Queries}
+
+In this report, tables are included that display certain intermediate results; for example, the building stock divided into size classes. These tables aim to:
+\begin{itemize}
+    \item Quantitatively verify the construction of the Enriched BAG,
+    \item Build knowledge,
+    \item Provide insight into the usability of the delivered files.
+\end{itemize}
+
+To support this final goal, the underlying SQL queries are also mentioned, which helped to produce the results. These provide insight into which attributes have been processed to create the table. Note: The file name within these queries does not match the descriptions mentioned above as it was continuously changed during the process.
+
+\section*{7B Decimal Separators}
+
+In this report, the decimal separator in tables is represented by a period [.]. The thousand separator is a comma [,]. This follows the American style. However, in the text, a comma is regularly used as a decimal separator. We assume the reader will recognize which situation applies.
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{|l|l|l|}
+    \hline
+    \textbf{SBI letter} & \textbf{SBI description} & \textbf{Energy sector for billing} \\
+    \hline
+    A & Agriculture, forestry, and fishing & agriculture \\
+    B & Mining and quarrying & industry \\
+    C & Industry & industry \\
+    D & Production and distribution of and trade in electricity, gas, steam, and cooled air & production \\
+    E & Water supply; waste and wastewater management and remediation activities & industry \\
+    F & Construction & industry \\
+    G & Wholesale and retail trade; repair of motor vehicles & services \\
+    H & Transportation and storage & services \\
+    I & Accommodation and food service activities & services \\
+    J & Information and communication & services \\
+    K & Financial institutions & services \\
+    L & Real estate activities & services \\
+    M & Consultancy, research, and other specialized business services & services \\
+    N & Rental of movable goods and other business services & services \\
+    O & Public administration, government services, and compulsory social security & services \\
+    P & Education & services \\
+    Q & Healthcare and welfare services & services \\
+    R & Culture, sports, and recreation & services \\
+    S & Other services & services \\
+    T & Households as employers & services \\
+    U & Extraterritorial organizations and bodies & services \\
+    \multicolumn{2}{|l|}{No economic activity} & housing construction \\
+    \hline
+  \end{tabular}
+  \caption{SBI Classification and Energy Sector Mapping}
+\end{table}
+```
+
+% Page 1 Content END
+
+% Page 2 Content START
+```latex
+\section{Aggregating VBOs to Buildings}
+
+We aggregate the VBO information from the previous chapter at the level of the building within which they are located.
+
+The steps to arrive at a dominant building-use function are explained using this fictional building. The first VBO within the building has a usage area of 50 m\textsuperscript{2} and is provided with the usage functions office and catering. The second VBO has a usage area of 100 m\textsuperscript{2} and is only provided with the usage function office.
+
+\begin{itemize}
+    \item The area of the VBO is assigned to each usage function. The idea behind this is that it is difficult to determine which proportion should be applied for each situation. For other possible strategies, see Recommendation 4.
+    \item At the building level, this is aggregated to usage function.
+    \item This results in the \% dominance of a usage function; in this example, the office function has a dominance of 75\%. Note: when the area of VBO1 is evenly divided over the two usage functions, the office function has a dominance of 150/200 = 83\%. Using both methodologies, this fictional building ultimately gets 'office' as the dominant usage function.
+\end{itemize}
+
+\section{Analysis: Inventory Divided by Usage Objectives and Types of Land Use}
+
+As an equivalent of paragraph 3.7, we can now create an overview of the building inventory by usage function and types of land use. The results of this analysis are shown in Table 12 in terms of the number of buildings, and in Table 13 in terms of total building area (expressed in m\textsuperscript{2}*1000). The tables have been added to the Excel file available for download, and related SQL queries have been added as Appendix B. Again, including the residential function significantly affects the percentage indicating the relative inventory per usage function. 
+
+The columns are slightly arranged differently compared to the tables in paragraph 3.7:
+\begin{itemize}
+    \item Columns 1 to 14 show the buildings that have only one usage function. Column 1 the greenhouses, columns 2 to 12 the original BAG usage functions, columns 13 and 14 the two added usage functions.
+    \item Column 15 shows buildings with mixed usage functions, one of which is the residential function.
+    \item Column 16 shows buildings with mixed usage functions, without the residential function.
+\end{itemize}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|}
+    \hline
+    \textbf{Building (Pand)} & \textbf{Usage Area (m\textsuperscript{2})} & \textbf{Usage Function}  \\
+    \hline
+    VBO1 & 50m\textsuperscript{2} & Office, 50m\textsuperscript{2} \\
+    & & Catering, 50m\textsuperscript{2} \\
+    \hline
+    VBO2 & 100m\textsuperscript{2} & Office, 100m\textsuperscript{2} \\
+    \hline
+    \textbf{Usage Function Related Area (m\textsuperscript{2}) Dominance:} & \textbf{Total Area (m\textsuperscript{2})} & \textbf{Dominance (\%)}  \\
+    \hline
+    Office & 150m\textsuperscript{2} & 75\% \\
+    Catering & 50m\textsuperscript{2} & 25\% \\
+    \hline
+    Total & 200m\textsuperscript{2} & 100\% \\
+    \hline
+\end{tabular}
+\end{table}
+
+```
+% Page 2 Content END
+
+% Page 3 Content START
+```latex
+% Page 40 of 91
+\section*{TNO PUBLIC TNO -report | TNO 2023 P10648}
+
+\subsection*{Table 19 Label stock by label classes, vbo level}
+ 
+\subsubsection*{The energy index:}
+The NEN detailed method energy indices (EI’s) differ from the ISSO basis method EI’s. Furthermore, the NTA labels do not have an EI in the received file. In order to determine an average label per building later, [EI_isso] has been introduced. It provides an EI value for non-ISSO situations that could have been calculated by ISSO software. For this, the average value from the ISSO situations has always been taken. The ISSO EI boundaries between the label axes are the same for each usage function. Table 20 shows the boundary transitions between the label classes after applying this processing. For [A+++++], there is only an average value. This table is used in section 5.2.3 to determine an average label class per building based on a weighted average [EI_isso].
+
+\subsubsection*{Table 20 EI Boundaries Between Label Classes for Variable [ei_isso]}
+ 
+\subsubsection*{The usage function according to the label system:}
+A labeled vbo can also have multiple usage functions according to the label methodology. In the methodology, a building is categorized into so-called 'energy zones'. An energy zone is assigned a usage function. Each 
+
+\footnotesize{Note: This also applies to A_plus labels calculated with the EP and EPA methods. This software was applied before 2015.}
+ 
+\begin{table}[h!]
+   \centering
+   \begin{tabular}{|c|c|c|c|c|}
+       \hline
+       Label & EPA original (\%) & EPA after promotion (\%) & NTA original (\%) & Total NTA \& \\ 
+       & & & & EPA after promotion (\%) \\
+       \hline
+       G & 6\% & 6\% & 2\% & 8\% \\
+       F & 2\% & 2\% & 1\% & 3\% \\
+       E & 4\% & 4\% & 1\% & 5\% \\
+       D & 5\% & 5\% & 1\% & 6\% \\
+       C & 10\% & 10\% & 3\% & 13\% \\
+       B & 8\% & 8\% & 2\% & 10\% \\
+       A & 39\% & 6\% & 3\% & 9\% \\
+       A+ & 0.2\% & 9\% & 5\% & 14\% \\
+       A++ & 0.3\% & 15\% & 4\% & 18\% \\
+       A+++ & 0.3\% & 3\% & 2\% & 5\% \\
+       A++++ & 0.1\% & 8\% & 1\% & 8\% \\
+       A+++++ & 0\% & 0\% & 0.2\% & 0.2\% \\
+       \hline
+       TOTAL & 76\% & 76\% & 24\% & 100\% \\
+   \end{tabular}
+   \caption{Label distribution by original and promoted classifications}
+\end{table}
+
+\begin{table}[h!]
+   \centering
+   \begin{tabular}{|c|c|c|c|c|}
+       \hline
+       Label & ei\_isso min & ei\_isso average & ei\_isso max & ei\_isso max - min \\
+       \hline
+       G & 1.76 & 2.28 & 42.05 & 40.29 \\
+       F & 1.61 & 1.68 & 1.75 & 0.14 \\
+       E & 1.46 & 1.53 & 1.60 & 0.14 \\
+       D & 1.31 & 1.38 & 1.45 & 0.14 \\
+       C & 1.16 & 1.23 & 1.30 & 0.14 \\
+       B & 1.06 & 1.10 & 1.15 & 0.09 \\
+       A & 1.01 & 1.03 & 1.05 & 0.04 \\
+       A+ & 0.91 & 0.96 & 1.00 & 0.09 \\
+       A++ & 0.69 & 0.80 & 0.90 & 0.21 \\
+       A+++ & 0.63 & 0.66 & 0.68 & 0.05 \\
+       A++++ & 0.00 & 0.48 & 0.62 & 0.62 \\
+       A+++++ & -0.25 & -0.25 & -0.25 & 0 \\
+       \hline
+   \end{tabular}
+   \caption{EI boundaries for variable ei\_isso}
+\end{table}
+
+% [Placeholder for any additional figures or non-tabular images]
+```
+% Page 3 Content END
+
+% Page 4 Content START
+\section*{Appendix F}
+
+\textbf{TNO PUBLIC} \\
+\textbf{TNO Report} | \textbf{TNO 2023 P10648}
+
+The facade area is calculated at 278 m². Three neighboring buildings share this facade. It is calculated that 66% of the floor perimeter drawn in the BAG is shared with the neighboring buildings (see left figure). On average, the neighboring buildings appear to be somewhat lower than this building, as ultimately 46% of the facade area is shared with these neighboring buildings (for an impression, see the right figure). Previous indications for the percentage overlap are accurate because the buildings are neatly drawn on the map ('3 times touches'). For this reason, [overlap\_valid = 1] applies.
+
+The building is not perfectly round [round = 0]; the ground area is also not a perfect rectangle [groundbox\_equal = 0]; which is obviously visually assessable with the figures.
+
+\[
+\textbf{Left figure:} \quad \text{Floor perimeter shared with neighboring buildings}
+\]
+\[
+\textbf{Right figure:} \quad \text{Facade area shared with neighboring buildings}
+\]
+
+% Placeholder for figures
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.45\textwidth]{left_figure.jpg}
+\hfill
+\includegraphics[width=0.45\textwidth]{right_figure.jpg}
+\caption{Illustrations showing floor perimeter and facade area shared with neighboring buildings.}
+\end{figure}
+% Page 4 Content END
+
+\end{document}
