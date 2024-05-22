@@ -33,6 +33,14 @@ The script utilizes GPT-4o's vision capabilities to translate and convert PDF fi
 - `pdf_processor.py`: Contains the PDF processing and translation logic.
 - `requirements.txt`: Lists the required Python packages.
 
+## Example PDF Files
+
+Three example files are included in this repository for testing purposes:
+- `Example_Dutch_file.pdf`: Example PDF file in Dutch for testing.
+- `Example_Translated_Latex.pdf`: Example of the translated LaTeX output from Overleaf.
+- `translated_document.tex`: LaTeX file generated from the Dutch PDF file, ready for use in Overleaf.
+
+
 ## Contributing
 
 Contributions are welcome! 
