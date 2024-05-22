@@ -1,4 +1,4 @@
-# Sidejob-omni_Translotor
+# Sidejob-omni_Translator
 
 
 The script utilizes GPT-4o's vision capabilities to translate and convert PDF files into LaTeX format, offering a distinct advantage over traditional methods that require text extraction. By processing each page as an image, it interprets both text and graphical data, translating content into English and recreating tables from visuals. This method bypasses common issues associated with text extraction, ensuring accurate replication of the original document's layout and content in LaTeX format. Textual content is directly converted into LaTeX, while placeholders are inserted for non-table images. The output is ready for immediate use in platforms like Overleaf, making the original PDF's content fully editable and accessible.
