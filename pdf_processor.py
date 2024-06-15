@@ -34,14 +34,14 @@ def process_pdf(uploaded_file, api_key, output_tex_file):
     I need assistance with several tasks for each page of the document. 
     First, translate all the text from Dutch to English. 
     For any images that depict tables, interpret and extract the data, then represent this data as an editable text table in English. 
-    Additionally, provide descriptions and relevant interpretations for other images within the document, if not possible to make them as table and leave a placeholder for this images/figures. 
-    so, if a figure image was as table and you replicated it as table, you should NOT write a placeholder for that image.
+    Additionally, provide descriptions and relevant interpretations for other images within the document. If not possible to make them as a table, **Fig: [bold interpretation of the image]** instead of leaving a placeholder for these images/figures. 
+    If a figure image was as a table and you replicated it as a table, you should NOT write a placeholder for that image.
     This will ensure that both the textual and visual content are fully accessible and usable in English.
-    also i want you to just directly to go respond, and you dont need for example to say that this is translated.
-    we need to replicate each page.
-    Finally, everything need to be written in latex format, i mean if it is section write as section if it is table write as table. 
-    
-    ps. document class article, usepackage graphicx begin document,  end are all already defined and you shouldnt not write them
+    Also, I want you to just directly go respond, and you don't need, for example, to say that this is translated.
+    We need to replicate each page.
+    Finally, everything needs to be written in LaTeX format, i.e., if it is a section write as a section if it is a table write as a table.
+
+    PS. Document class article, usepackage graphicx begin document, and end are all already defined and you shouldn't write them
     text: {text}
     """
 
@@ -81,7 +81,7 @@ def process_pdf(uploaded_file, api_key, output_tex_file):
             images.append(image_path)
         
         system_message = create_message(
-            "I have a PDF document in Dutch that includes text, tables, and images across multiple pages. I need assistance with several tasks for each page of the document. First, translate all the text from Dutch to English. For any images that depict tables, interpret and extract the data, then represent this data as an editable text table in English. Additionally, provide descriptions and relevant interpretations for other images within the document, if not possible to make them as table and leave a placeholder for this images/figures. so, if a figure image was as table and you replicated it as table, you should NOT write a placeholder for that image. This will ensure that both the textual and visual content are fully accessible and usable in English. also i want you to just directly to go respond, and you dont need for example to say that this is translated.  we need to replicate each page. Finally, everything need to be written in latex format, i mean if it is section write as section if it is table write as table. ps. document class article, usepackage graphicx begin document,  end are all already defined and you shouldnt not write them ",
+            "I have a PDF document in Dutch that includes text, tables, and images across multiple pages. I need assistance with several tasks for each page of the document. First, translate all the text from Dutch to English. For any images that depict tables, interpret and extract the data, then represent this data as an editable text table in English. Additionally, provide descriptions and relevant interpretations for other images within the document. If not possible to make them as a table and leave a placeholder for these images/figures, instead, **Fig: [bold interpretation of the image]**. If a figure image was as a table and you replicated it as a table, you should NOT write a placeholder for that image. This will ensure that both the textual and visual content are fully accessible and usable in English. Also, I want you to just directly respond, and you don't need for example to say that this is translated. We need to replicate each page. Finally, everything needs to be written in latex format, i mean if it is section write as section if it is table write as table. ps. document class article, usepackage graphicx begin document, end are all already defined and you shouldn't not write them ",
             "system"
         )
 
@@ -99,16 +99,21 @@ def process_pdf(uploaded_file, api_key, output_tex_file):
             }
             messages.append(image_message)
 
-        # Get response from GPT-4o
-        response = get_response(messages, api_key)
-        
-        if 'choices' in response and response['choices']:
-            translated_content = response['choices'][0]['message']['content']
-            latex_content += f"% Page {page_num + 1} Content START\n"
-            latex_content += translated_content
-            latex_content += f"\n% Page {page_num + 1} Content END\n\n"
-        else:
-            raise Exception(f"Error processing page {page_num + 1}: {response}")
+        try:
+            # Get response from GPT-4o
+            response = get_response(messages, api_key)
+            if 'choices' in response and response['choices']:
+                translated_content = response['choices'][0]['message']['content']
+                latex_content += f"% Page {page_num + 1} Content START\n"
+                latex_content += translated_content
+                latex_content += f"\n% Page {page_num + 1} Content END\n\n"
+            else:
+                raise Exception(f"Error processing page {page_num + 1}: {response}")
+        except Exception as e:
+            print(f"Error processing page {page_num + 1}: {e}")
+            latex_content += f"% Page {page_num + 1} skipped due to error.\n"
+
+
 
     # Add LaTeX ending
     latex_content += "\\end{document}"
