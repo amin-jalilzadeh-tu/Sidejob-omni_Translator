@@ -41,7 +41,8 @@ Three example files are included in this repository for testing purposes:
 - `translated_document.tex`: LaTeX file generated from the Dutch PDF file, ready for use in Overleaf.
 
 
-## Contributing
+## Video Demonstration
 
-Contributions are welcome! 
+Check out this video demonstration to see how the project works in action:
 
+[Watch the video demonstration here](./23.05.2024_00.55.03_REC.mp4)
